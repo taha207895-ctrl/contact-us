@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konnect Yatra - Client Form</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f5f5f5;
+}
+
+.container{
+  text-align:center;
+  padding:40px;
+}
+
+.card{
+  background: grey
+  ;
+  padding:25px;
+  margin:40px auto;
+  border-radius:10px;
+  box-shadow:0 0 30px #ccc;
+  max-width:500px;
+}
+
+input, textarea, select{
+  width:90%;
+  padding:10px;
+  margin:8px;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+
+.phone-box{
+  display:flex;
+  justify-content:center;
+}
+
+.phone-box select{
+  width:30%;
+}
+
+.phone-box input{
+  width:60%;
+  margin-left:5px;
+}
+
+.btn{
+  background:#ff4d6d;
+  color:white;
+  padding:12px 30px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+#msg{
+  display:none;
+  color:green;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+h2{
+  margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Client Contact Form</h1>
+
+<div class="card">
+
+<form id="myForm">
+
+<!-- Client Name  -->
+<input type="text" name="name" placeholder="Enter Your Name" required>
+ <!-- PHONE WITH COUNTRY CODE AUTO -->
+<div class="phone-box">
+<select name="code" id="code" required>
+<option value="">Code</option>
+<option value="+1">USA (+1)</option>
+</select>
+<input type="text" name="phone" placeholder="Phone Number" required>
+</div> 
+<!-- Enter Your Email  -->
+<input type="email" name="email" placeholder="Enter Your Email" required>
+  
+<!-- STATE DROPDOWN (USA ALL STATES) -->
+<select name="state" id="state" required>
+<option value="">Select State</option>
+<optgroup label="USA States">
+<option value="usa">Alabama</option>
+<option value="usa">Alaska</option>
+<option value="usa">Arizona</option>
+<option value="usa">Arkansas</option>
+<option value="usa">California</option>
+<option value="usa">Colorado</option>
+<option value="usa">Connecticut</option>
+<option value="usa">Delaware</option>
+<option value="usa">Florida</option>
+<option value="usa">Georgia</option>
+<option value="usa">Hawaii</option>
+<option value="usa">Idaho</option>
+<option value="usa">Illinois</option>
+<option value="usa">Indiana</option>
+<option value="usa">Iowa</option>
+<option value="usa">Kansas</option>
+<option value="usa">Kentucky</option>
+<option value="usa">Louisiana</option>
+<option value="usa">Maine</option>
+<option value="usa">Maryland</option>
+<option value="usa">Massachusetts</option>
+<option value="usa">Michigan</option>
+<option value="usa">Minnesota</option>
+<option value="usa">Mississippi</option>
+<option value="usa">Missouri</option>
+<option value="usa">Montana</option>
+<option value="usa">Nebraska</option>
+<option value="usa">Nevada</option>
+<option value="usa">New Hampshire</option>
+<option value="usa">New Jersey</option>
+<option value="usa">New Mexico</option>
+<option value="usa">New York</option>
+<option value="usa">North Carolina</option>
+<option value="usa">North Dakota</option>
+<option value="usa">Ohio</option>
+<option value="usa">Oklahoma</option>
+<option value="usa">Oregon</option>
+<option value="usa">Pennsylvania</option>
+<option value="usa">Rhode Island</option>
+<option value="usa">South Carolina</option>
+<option value="usa">South Dakota</option>
+<option value="usa">Tennessee</option>
+<option value="usa">Texas</option>
+<option value="usa">Utah</option>
+<option value="usa">Vermont</option>
+<option value="usa">Virginia</option>
+<option value="usa">Washington</option>
+<option value="usa">West Virginia</option>
+<option value="usa">Wisconsin</option>
+<option value="usa">Wyoming</option>
+</optgroup>
+</select>
+
+<!-- COUNTRY DROPDOWN -->
+<select name="country" id="country" required>
+<option value="">Country Selected</option>
+<option>United states of America</option>
+</select>
+
+
+
+<!-- PROJECT MESSAGE -->
+<textarea name="message" placeholder="Project Details"></textarea>
+
+<!-- SUBMIT BUTTON -->
+<button type="submit" class="btn">Submit</button>
+
+</form>
+
+<p id="msg">Form Submitted Successfully ✅</p>
+
+</div>
+
+</div>
+
+<script>
+// =====================
+//GOOGLE SHEET WEB APP LINK
+// =====================
+const scriptURL =https://script.google.com/macros/s/AKfycbzBYyqfrmkZ02HcaFtJQ92kcBsohsb3NTFIKh1jb-Zeqanqc0bmgkf8i4p0qi9UnLQfSw/exec;
+
+// FORM ELEMENTS
+const form = document.getElementById('myForm');
+const msg = document.getElementById("msg");
+
+// STATE → AUTO COUNTRY + CODE
+const state = document.getElementById("state");
+const country = document.getElementById("country");
+const code = document.getElementById("code");
+
+state.addEventListener("change", function(){
+  if(this.value=="usa"){
+    country.value="America";
+    code.value="+1";
+  }
+});
+
+// FORM SUBMIT
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+  .then(response => {
+    msg.style.display="block";
+    form.reset();
+  });
+});
+</script>
+
+</body>
+</html>
